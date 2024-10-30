@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    stages {
+        // Checkout the code from the repository
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/trkiataibi/Testing-Project.git'
+            }
+        }
+
+        // Build the project and run the tests
+        stage('Build') {
+            steps {
+                sh './mvnw clean test --no-transfer-progress'
+            }
+        }
+
+        // Package the application into a Docker image
+        stage('Package Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t mvc-image .'
+                }
+            }
+        }
+
+        // Deploy the Docker container
+        stage('Deploy Docker Container') {
+            steps {
+                script {
+                    sh 'docker stop spring-boot-app || true && docker rm spring-boot-app || true'
+                    sh 'docker run -d --name spring-boot-app -p 8081:8080 mvc-image'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build and deployment succeeded!'
+        }
+        failure {
+            echo 'Build or deployment failed.'
+        }
+    }
+}
