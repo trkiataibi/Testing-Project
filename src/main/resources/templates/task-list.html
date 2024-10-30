@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 80%;
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin: 0 5px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .btn-create {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #28a745;
+            color: #fff;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+        .btn-create:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Task List</h1>
+    <a href="/tasks/create" class="btn-create">Create New Task</a>
+    <ul>
+        <li th:each="task : ${tasks}">
+            <div>
+                <strong th:text="${task.title}">Task Title</strong> -
+                <span th:text="${task.priority}">Priority</span>
+            </div>
+            <div>
+                <a th:href="@{/tasks/edit/{id}(id=${task.id})}">Edit</a> |
+                <a th:href="@{/tasks/delete/{id}(id=${task.id})}">Delete</a> |
+                <a th:href="@{/tasks/set-priority/{id}(id=${task.id})}">Set Priority</a>
+            </div>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

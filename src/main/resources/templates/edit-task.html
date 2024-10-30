@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            max-width: 500px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Edit Task</h1>
+    <form th:action="@{/tasks/edit/{id}(id=${task.id})}" th:object="${task}" method="post">
+        <label>Title:</label>
+        <input type="text" th:field="*{title}" required />
+
+        <label>Description:</label>
+        <textarea th:field="*{description}" required></textarea>
+
+        <button type="submit">Save</button>
+    </form>
+</div>
+</body>
+</html>
